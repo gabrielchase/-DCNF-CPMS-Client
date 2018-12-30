@@ -11,7 +11,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 const App = () => (
   <Router>
     <AuthProvider>
-      <Header />
+      {/* <Header /> */}
       <Switch>
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         <Route path="/" component={Landing} /> 

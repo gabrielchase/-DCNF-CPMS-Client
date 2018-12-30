@@ -7,7 +7,7 @@ export default () => (
         <AuthConsumer>
             { ({ is_auth, login, logout }) => ( 
                 <div>
-                    <h3><Link to="/">HOME</Link></h3>
+                    {/* <h3><Link to="/">HOME</Link></h3> */}
 
                     { is_auth ? (
                         <ul>
