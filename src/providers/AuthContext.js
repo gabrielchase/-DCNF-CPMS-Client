@@ -7,14 +7,9 @@ class AuthProvider extends Component {
         is_auth: false
     }
 
-    // constructor() {
-    //     super()
-    //     this.login = this.login.bind(this)
-    //     this.logout = this.logout.bind(this)
-    // }
-
-    login = () => {
+    login = (farm_name, password) => {
         console.log('logging in')
+        console.log(farm_name, password)
         this.setState({ is_auth: true })
     }
 
