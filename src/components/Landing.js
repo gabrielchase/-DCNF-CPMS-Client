@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { AuthConsumer } from '../providers/AuthContext'
 
-import history from '../history'
-
-
 class Landing extends Component {
     state = {
         farm_name: `Don Chicho's`,
