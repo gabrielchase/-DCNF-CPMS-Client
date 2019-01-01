@@ -3,10 +3,14 @@ import axios from 'axios'
 
 import { API_URL } from '../constants.json'
 
-const AuthContext = React.createContext()
+const ApiContext = React.createContext()
 
-class AuthProvider extends Component {
-    state = { is_auth: false }
+class ApiProvider extends Component {
+    state = { 
+        is_auth: false,
+        payments: [],
+        order: {}
+    }
 
     login = async (farm_name, password) => {
         const res = await axios.post(`${API_URL}/auth/login`, { farm_name, password })
@@ -26,13 +30,13 @@ class AuthProvider extends Component {
 
     render() {
         return (
-            <AuthContext.Provider value={{ is_auth: this.state.is_auth, login: this.login, logout: this.logout }}>
+            <ApiContext.Provider value={{ is_auth: this.state.is_auth, login: this.login, logout: this.logout }}>
                 {this.props.children}
-            </AuthContext.Provider>
+            </ApiContext.Provider>
         )
     }
 }
 
-const AuthConsumer = AuthContext.Consumer
+const ApiConsumer = ApiContext.Consumer
 
-export { AuthProvider, AuthConsumer }
+export { ApiProvider, ApiConsumer }

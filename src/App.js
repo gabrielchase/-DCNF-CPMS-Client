@@ -1,8 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { AuthProvider } from './providers/AuthContext'
-
+import { ApiProvider } from './providers/ApiContext'
 
 import Header from './components/Header'
 import Dashboard from './components/Dashboard'
@@ -12,13 +11,13 @@ import history from './history'
 
 const App = () => (
   <Router history={history}>
-    <AuthProvider>
-      {/* <Header /> */}
-      <Switch>
-        <ProtectedRoute path="/dashboard" component={Dashboard} />
-        <Route path="/" component={Landing} /> 
-      </Switch>
-    </AuthProvider>
+    <ApiProvider>
+        {/* <Header /> */}
+        <Switch>
+          <ProtectedRoute path="/dashboard" component={Dashboard} />
+          <Route path="/" component={Landing} /> 
+        </Switch>
+    </ApiProvider>
   </Router>
 )
 

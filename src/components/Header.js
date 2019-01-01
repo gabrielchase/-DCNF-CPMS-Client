@@ -1,10 +1,10 @@
 import React from 'react'
-import { AuthConsumer } from '../providers/AuthContext'
+import { ApiConsumer } from '../providers/ApiContext'
 import { Link } from 'react-router-dom'
 
 export default () => (
     <header>
-        <AuthConsumer>
+        <ApiConsumer>
             { ({ is_auth, login, logout }) => ( 
                 <div>
                     {/* <h3><Link to="/">HOME</Link></h3> */}
@@ -20,6 +20,6 @@ export default () => (
                     }
                 </div>
             )}
-        </AuthConsumer>
+        </ApiConsumer>
     </header>
 )

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { AuthConsumer } from '../providers/AuthContext'
+import { ApiConsumer } from '../providers/ApiContext'
 
 const ProtectedRoute = ({ component: Component, ...rest}) => (
-  <AuthConsumer>
+  <ApiConsumer>
     {({ is_auth }) => (
         <Route
             render={
@@ -15,7 +15,7 @@ const ProtectedRoute = ({ component: Component, ...rest}) => (
             {...rest}
         />
     )}
-  </AuthConsumer>
+  </ApiConsumer>
 )
 
 export default ProtectedRoute

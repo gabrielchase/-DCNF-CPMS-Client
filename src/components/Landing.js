@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AuthConsumer } from '../providers/AuthContext'
+import { ApiConsumer } from '../providers/ApiContext'
 
 class Landing extends Component {
     state = {
@@ -58,7 +58,7 @@ class Landing extends Component {
 }
 
 const ConnectedLanding = props => (
-    <AuthConsumer>
+    <ApiConsumer>
         {({ is_auth, login }) => (
             <Landing
                 {...props}
@@ -66,7 +66,7 @@ const ConnectedLanding = props => (
                 login={login}
             />
         )}
-    </AuthConsumer>
+    </ApiConsumer>
 )
 
 export default ConnectedLanding
