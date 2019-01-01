@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { AuthProvider } from './providers/AuthContext'
 
+
 import Header from './components/Header'
 import Dashboard from './components/Dashboard'
 import Landing from './components/Landing'
 import ProtectedRoute from './components/ProtectedRoute'
+import history from './history'
 
 const App = () => (
-  <Router>
+  <Router history={history}>
     <AuthProvider>
       {/* <Header /> */}
       <Switch>
