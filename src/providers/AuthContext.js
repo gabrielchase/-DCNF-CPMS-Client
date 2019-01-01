@@ -1,20 +1,26 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+
+import { API_URL } from '../constants.json'
 
 const AuthContext = React.createContext()
 
 class AuthProvider extends Component {
-    state = { 
-        is_auth: false
-    }
+    state = { is_auth: false }
 
-    login = (farm_name, password) => {
-        console.log('logging in')
-        console.log(farm_name, password)
-        this.setState({ is_auth: true })
+    login = async (farm_name, password) => {
+        const res = await axios.post(`${API_URL}/auth/login`, { farm_name, password })
+        
+        if (res.data.success) {
+            this.setState({ is_auth: true })
+            localStorage.setItem('token', res.data.data.token)
+            return true 
+        } else {
+            return false
+        }
     }
 
     logout = () => {
-        console.log('logging out')
         this.setState({ is_auth: false })
     }
 
