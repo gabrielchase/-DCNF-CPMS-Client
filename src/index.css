@@ -18,3 +18,7 @@ code {
   margin: 0 auto;
   padding-top: 120px;
 }
+
+tbody {
+  text-align: center;
+}

@@ -22,15 +22,39 @@ class Dashboard extends Component {
     renderPayments = (payments) => {
         if (payments) {
             return (
-                <div>
-                    {payments.map((p) => {
-                        return (
-                            <div>
-                                <p>{p.partner_name}: {p.amount}</p>
+                <div class="container-table100">
+                    <div class="wrap-table100">
+                        <div class="table100 ver1 m-b-110">
+                            <div class="table100-head">
+                                <table>
+                                    <thead>
+                                        <tr class="row100 head">
+                                            <th class="cell100 column1">Name</th>
+                                            <th class="cell100 column2">Amount</th>
+                                            <th class="cell100 column3">Order ID</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
-                        )
-                    })}
+                            <div class="table100-body js-pscroll">
+                                <table>
+                                    <tbody>
+                                    {payments.map((p) => {
+                                        return (
+                                            <tr class="row100 body">
+                                                <td class="cell100 column1">{p.partner_name}</td>
+                                                <td class="cell100 column2">{p.amount}</td>
+                                                <td class="cell100 column3">{p.order_id}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                    
             )
         } else {
             return (
@@ -51,7 +75,7 @@ class Dashboard extends Component {
                     { payments_today.data.payments ? this.renderPayments(payments_today.data.payments) : '' }
                     <p>Payments This Month: </p>
                     { payments_this_month.data.payments ? this.renderPayments(payments_this_month.data.payments) : '' }
-                </div>   
+                </div>
             )
         } else {
             return (
