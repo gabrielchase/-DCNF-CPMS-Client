@@ -1,60 +1,52 @@
 import React, { Component } from 'react'
+import qs from 'query-string'
 
 import { ApiConsumer } from '../providers/ApiContext'
+import DateDropdown from './DateDropdown'
 
 
 class Dashboard extends Component {
-    state = {
-        payments_this_month: {},
-        payments_today: {}
-    }
-
     async componentDidMount() {
-        const current_date = new Date()
-        const year = current_date.getFullYear()
-        const month = current_date.getMonth() + 1 
-        const date = current_date.getDate()
+        const values = qs.parse(this.props.location.search)
+        
+        let current_date = new Date()
+        let year = current_date.getFullYear()
+        await this.props.changeYear(year)
+        
+        let month = current_date.getMonth() + 1 
+        await this.props.changeMonth(month)
+        
+        let date = current_date.getDate()
+        await this.props.changeDate(date)
 
-        const { payments_this_month, payments_today} = await this.props.getPayments(2021, 12, 2)
-        this.setState({ payments_this_month, payments_today })
+        // console.log(year, month, date)
+
+        await this.props.getPayments(year, month, date)
     }
 
     renderPayments = (payments) => {
         if (payments) {
             return (
-                <div class="container-table100">
-                    <div class="wrap-table100">
-                        <div class="table100 ver1 m-b-110">
-                            <div class="table100-head">
-                                <table>
-                                    <thead>
-                                        <tr class="row100 head">
-                                            <th class="cell100 column1">Name</th>
-                                            <th class="cell100 column2">Amount</th>
-                                            <th class="cell100 column3">Order ID</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div class="table100-body js-pscroll">
-                                <table>
-                                    <tbody>
-                                    {payments.map((p) => {
-                                        return (
-                                            <tr class="row100 body">
-                                                <td class="cell100 column1">{p.partner_name}</td>
-                                                <td class="cell100 column2">{p.amount}</td>
-                                                <td class="cell100 column3">{p.order_id}</td>
-                                            </tr>
-                                        )
-                                    })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    
+                <table class="centered highlight">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Order ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {payments.map((p) => {
+                            return (
+                                <tr>
+                                    <td>{p.partner_name}</td>
+                                    <td>P{p.amount}</td>
+                                    <td>{p.order_id}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>                    
             )
         } else {
             return (
@@ -64,17 +56,19 @@ class Dashboard extends Component {
         
     }
 
-
     render() {
-        const { payments_this_month, payments_today } = this.state
+        const { payments_this_month, payments_today } = this.props
 
-        if (payments_today.success && payments_this_month.success) {
+        if (Object.keys(payments_today).length > 0 || Object.keys(payments_this_month).length > 0) {
             return (
-                <div>
-                    <p>Payments Today: </p>
-                    { payments_today.data.payments ? this.renderPayments(payments_today.data.payments) : '' }
-                    <p>Payments This Month: </p>
-                    { payments_this_month.data.payments ? this.renderPayments(payments_this_month.data.payments) : '' }
+                <div class="container">
+                    <DateDropdown />
+                    <p><strong>Payments Today </strong></p>
+                    <p>Total: {payments_today.total}</p>
+                    { payments_today.payments ? this.renderPayments(payments_today.payments) : '' }
+                    <p><strong>Payments This Month</strong></p>
+                    <p>Total: {payments_this_month.total}</p>
+                    { payments_this_month.payments ? this.renderPayments(payments_this_month.payments) : '' }
                 </div>
             )
         } else {
@@ -87,11 +81,16 @@ class Dashboard extends Component {
 
 const ConnectedDashboard = props => (
     <ApiConsumer>
-        {({ is_auth, getPayments }) => (
+        {({ is_auth, getPayments, payments_this_month, payments_today, changeYear, changeMonth, changeDate }) => (
             <Dashboard
                 {...props}
                 is_auth={is_auth}
+                payments_this_month={payments_this_month}
+                payments_today={payments_today}
                 getPayments={getPayments}
+                changeYear={changeYear}
+                changeMonth={changeMonth}
+                changeDate={changeDate}
             />
         )}
     </ApiConsumer>

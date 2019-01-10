@@ -10,27 +10,34 @@ const ApiContext = React.createContext()
 class ApiProvider extends Component {
     state = { 
         is_auth: false,
-        payments: [],
-        order: {}
+        payments_this_month: {},
+        payments_today: {},
+        order: {},
+        year: 0,
+        month: 0, 
+        date: 0
     }
 
     getPayments = async (year, month, date) => {
-        const _year = parseInt(year)
-        const _month = parseInt(month)
-        const _date = parseInt(date)
-        console.log('date: ', date)
-        console.log(`${API_URL}/payments?year=${_year}&month=${_month}&date=${_date}`)
+        console.log('getting payments for: ', this.state.year, this.state.month, this.state.date)
+        const _year = parseInt(this.state.year)
+        const _month = parseInt(this.state.month)
+        const _date = parseInt(this.state.date)
+        // console.log('date: ', date)
+        console.log('month query: ', `${API_URL}/payments?year=${_year}&month=${_month}`)
+        console.log('date query: ', `${API_URL}/payments?year=${_year}&month=${_month}&date=${_date}`)
         const headers = lib.getHeadersWithJWT()
         const payments_this_month = await axios.get(`${API_URL}/payments?year=${_year}&month=${_month}`, headers)
         const payments_today = await axios.get(`${API_URL}/payments?year=${_year}&month=${_month}&date=${_date}`, headers)
 
-        console.log('this_month: ', payments_this_month.data)
-        console.log('today: ', payments_today.data)
+        console.log('this_month: ', payments_this_month.data.data)
+        console.log('today: ', payments_today.data.data)
         
-        if (payments_this_month.data.success && payments_today.data.success)
-            return { payments_this_month: payments_this_month.data, payments_today: payments_today.data }
-        else 
-            return []
+        if (payments_this_month.data.success && payments_today.data.success) {
+            this.setState({ payments_this_month: payments_this_month.data.data })
+            this.setState({ payments_today: payments_today.data.data })
+        }
+            // return { payments_this_month: payments_this_month.data, payments_today: payments_today.data }
     }
 
     login = async (farm_name, password) => {
@@ -49,15 +56,38 @@ class ApiProvider extends Component {
         this.setState({ is_auth: false })
     }
 
+    
+    changeYear = (year) => {
+        this.setState({ year })
+    }
+    
+    changeMonth = (month) => {
+        console.log('in changeMonth: ', month)
+        this.setState({ month })
+        console.log('changed month: ', this.state.month)
+    }
+
+    changeDate = (date) => {
+        this.setState({ date })
+    }
+
     render() {
         return (
             <ApiContext.Provider value={{ 
-                    is_auth: this.state.is_auth, 
-                    login: this.login, 
-                    logout: this.logout,
-                    getPayments: this.getPayments
-                    }}>
-                        {this.props.children}
+                is_auth: this.state.is_auth, 
+                login: this.login, 
+                logout: this.logout,
+                getPayments: this.getPayments,
+                year: this.state.year,
+                month: this.state.month,
+                date: this.state.date,
+                changeYear: this.changeYear,
+                changeMonth: this.changeMonth,
+                changeDate: this.changeDate,
+                payments_this_month: this.state.payments_this_month,
+                payments_today: this.state.payments_today
+            }}>
+                {this.props.children}
             </ApiContext.Provider>
         )
     }

@@ -25,33 +25,28 @@ class Landing extends Component {
 
     render() {
         return (
-            <div class="w-full max-w-xs" id="landing">
-                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="login-form" onSubmit={this.handleLogin}>
-                    <div class="mb-4">
-                        <label class="block text-grey-darker text-sm font-bold mb-2" for="farm_name">
-                            Farm Name
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="farm_name" type="text" placeholder="Don Chicho's" value={this.state.farm_name} onChange={this.handleOnChange} />
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-grey-darker text-sm font-bold mb-2" for="password">
-                            Password
-                        </label>
-                        <input class="shadow appearance-none border w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" value={this.state.password} onChange={this.handleOnChange} />
-                    </div>
-        
-                    <div class="flex items-center justify-between">
-                        <button class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                            Log In
-                        </button>
-                        <a class="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" >
-                            Forgot Password?
-                        </a>
-                    </div>
-                </form>
-                <p class="text-center text-grey text-xs" id="copyright">
-                    ©2019 Don Chicho's Nurture Farm Corp. <br/> All rights reserved.
-                </p>
+            <div class="valign-wrapper row login-box">
+                <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+                    <form onSubmit={this.handleLogin}>
+                        <div class="card-content">
+                            <span class="card-title">Enter Credentials</span>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <label for="email">Farm Name or Email Address</label>
+                                    <input type="text"  name="email" id="email" value={this.state.farm_name}/>
+                                </div>
+                                <div class="input-field col s12">
+                                    <label for="password">Password </label>
+                                    <input type="password" class="validate" name="password" id="password" value={this.state.password}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action right-align">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                
             </div>
         )
     }
