@@ -4,6 +4,8 @@ import { ApiConsumer } from '../providers/ApiContext'
 import DateDropdown from './DateDropdown'
 import OrderModal from './OrderModal'
 
+import { MONTHS } from '../constants'
+import { displayDate, displayMoney } from '../lib'
 
 class Dashboard extends Component {
     async componentDidMount() {        
@@ -31,7 +33,7 @@ class Dashboard extends Component {
             return (
                 <div>
                     <p><strong>Payments {time}</strong></p>
-                    <p>Total: {payments.total}</p>
+                    <p>Total: {displayMoney(payments.total)}</p>
                     <table class="centered highlight">
                         <thead>
                             <tr>
@@ -45,9 +47,9 @@ class Dashboard extends Component {
                             {payments.payments.map((p) => {
                                 return (
                                     <tr id='partner-row' onClick={this.handlePartnerRowClick.bind(this, p)}>
-                                        <td>{p.due_date}</td>
+                                        <td>{displayDate(p.due_date)}</td>
                                         <td>{p.partner_name}</td>
-                                        <td>P{p.amount}</td>
+                                        <td>{displayMoney(p.amount)}</td>
                                         <td>{p.order_id}</td>
                                     </tr>
                                 )
@@ -61,7 +63,6 @@ class Dashboard extends Component {
                 <div>Loading...</div>
             )
         }
-        
     }
 
     render() {
@@ -73,7 +74,8 @@ class Dashboard extends Component {
                     <DateDropdown />
                     <OrderModal />
                     { payments_today.paments && payments_today.payments.length > 0 ? this.renderPayments(payments_today, 'Today') : '' }
-                    { payments_this_month.payments ? this.renderPayments(payments_this_month, 'This Month') : '' }
+                    { payments_this_month.payments ? this.renderPayments(payments_this_month, `for ${MONTHS[this.props.month-1]} ${this.props.year}`) : '' }
+                    <br />
                 </div>
             )
         } else {
@@ -86,7 +88,7 @@ class Dashboard extends Component {
 
 const ConnectedDashboard = props => (
     <ApiConsumer>
-        {({ is_auth, getPayments, payments_this_month, payments_today, changeYear, changeMonth, changeDate }) => (
+        {({ is_auth, getPayments, payments_this_month, payments_today, changeYear, changeMonth, changeDate, year, month }) => (
             <Dashboard
                 {...props}
                 is_auth={is_auth}
@@ -96,6 +98,8 @@ const ConnectedDashboard = props => (
                 changeYear={changeYear}
                 changeMonth={changeMonth}
                 changeDate={changeDate}
+                year={year}
+                month={month}
             />
         )}
     </ApiConsumer>

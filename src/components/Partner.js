@@ -64,8 +64,8 @@ class Partner extends Component {
                             {partner.payments.map((p) => {
                                 return (
                                     <tr>
-                                        <td>{p.due_date}</td>
-                                        <td>{p.amount}</td>
+                                        <td>{lib.displayDate(p.due_date)}</td>
+                                        <td>{lib.displayMoney(p.amount)}</td>
                                         <td>
                                             <Input type="select" onChange={e => this.handlePaymentChanges(e, p)}>
                                                 <option value={p.paid ? true : false}>{p.paid ? 'PAID' : 'NOT PAID'}</option>
