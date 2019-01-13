@@ -28,19 +28,19 @@ class DateDropdown extends Component {
                     <option value=""></option>
                     {MONTHS.map((m) => {
                         return (
-                            <option value={MONTHS.indexOf(m)}>{m}</option>
+                            <option value={MONTHS.indexOf(m)+1}>{m}</option>
                         )
                     })}
                 </Input>
-                <Input s={2} type="select" label="Date" onChange={e => this.handleDateChange('date', e.target.value)}>
+                {/* <Input s={2} type="select" label="Date" onChange={e => this.handleDateChange('date', e.target.value)}>
                     <option value=""></option>
                     {[...Array(31).keys()].map((i) => {
                         return (
                             <option value={i+1}>{i+1}</option>
                         )
                     })}
-                </Input>
-                <Button waves="light" onClick={this.props.getPayments}>Search</Button>
+                </Input> */}
+                <Button s={4} waves="light" onClick={this.props.getPayments}>Search</Button>
             </Row>
             
         )
