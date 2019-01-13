@@ -2,30 +2,35 @@ import React, { Component } from 'react'
 import { Button, Input, Row } from 'react-materialize'
 import { ApiConsumer } from '../providers/ApiContext'
 
-const MONTHS = ['January', 'February',  'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+import { MONTHS } from '../constants'
 
 class DateDropdown extends Component {
     state = { 
-       year: this.props.year
+       year: this.props.year,
+
     }
 
-    handleDateChange = (type, val) => {
+    handleDateChange = async (type, val) => {
         if (type === 'month') 
-            this.props.changeMonth(val)
+            await this.props.changeMonth(val)
         if (type === 'date') 
-            this.props.changeDate(val)
+            await this.props.changeDate(val)
+
+        await this.props.getPayments()
     }
 
-    handleYearChange = (e) => {
-
+    handleYearChange = async (e) => {
+        await this.props.changeYear(e.target.value)
+        if (this.props.year.length === 4) {
+            await this.props.getPayments()
+        }
     }
 
     render() {
         return (
             <Row>
-                <Input s={4} label="Year" value={this.props.year} onChange={e => this.props.changeYear(e.target.value)} />
-                <Input s={4} type="select" label="Month" onChange={e => this.handleDateChange('month', e.target.value)}>
-                    <option value=""></option>
+                <Input s={4} label="Year" value={this.props.year} onChange={e => this.handleYearChange(e)} />
+                <Input s={4} type="select" label="Month" value={this.props.month} onChange={e => this.handleDateChange('month', e.target.value)}>
                     {MONTHS.map((m) => {
                         return (
                             <option value={MONTHS.indexOf(m)+1}>{m}</option>
@@ -40,7 +45,7 @@ class DateDropdown extends Component {
                         )
                     })}
                 </Input> */}
-                <Button s={4} waves="light" onClick={this.props.getPayments}>Search</Button>
+                {/* <Button s={4} waves="light" onClick={this.props.getPayments}>Search</Button> */}
             </Row>
             
         )
