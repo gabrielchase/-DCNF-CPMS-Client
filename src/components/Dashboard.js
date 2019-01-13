@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import qs from 'query-string'
 
 import { ApiConsumer } from '../providers/ApiContext'
 import DateDropdown from './DateDropdown'
+import OrderModal from './OrderModal'
 
 
 class Dashboard extends Component {
-    async componentDidMount() {
-        const values = qs.parse(this.props.location.search)
-        
+    async componentDidMount() {        
         let current_date = new Date()
         let year = current_date.getFullYear()
         await this.props.changeYear(year)
@@ -24,29 +22,39 @@ class Dashboard extends Component {
         await this.props.getPayments(year, month, date)
     }
 
-    renderPayments = (payments) => {
+    handlePartnerRowClick = (partner) => {
+        this.props.history.push(`/partner/${partner.order_id}`)
+    }
+
+    renderPayments = (payments, time) => {
         if (payments) {
             return (
-                <table class="centered highlight">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Amount</th>
-                            <th>Order ID</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {payments.map((p) => {
-                            return (
-                                <tr>
-                                    <td>{p.partner_name}</td>
-                                    <td>P{p.amount}</td>
-                                    <td>{p.order_id}</td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>                    
+                <div>
+                    <p><strong>Payments {time}</strong></p>
+                    <p>Total: {payments.total}</p>
+                    <table class="centered highlight">
+                        <thead>
+                            <tr>
+                                <th>Due Date</th>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Order ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {payments.payments.map((p) => {
+                                return (
+                                    <tr id='partner-row' onClick={this.handlePartnerRowClick.bind(this, p)}>
+                                        <td>{p.due_date}</td>
+                                        <td>{p.partner_name}</td>
+                                        <td>P{p.amount}</td>
+                                        <td>{p.order_id}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>  
+                </div>                  
             )
         } else {
             return (
@@ -63,12 +71,9 @@ class Dashboard extends Component {
             return (
                 <div class="container">
                     <DateDropdown />
-                    <p><strong>Payments Today </strong></p>
-                    <p>Total: {payments_today.total}</p>
-                    { payments_today.payments ? this.renderPayments(payments_today.payments) : '' }
-                    <p><strong>Payments This Month</strong></p>
-                    <p>Total: {payments_this_month.total}</p>
-                    { payments_this_month.payments ? this.renderPayments(payments_this_month.payments) : '' }
+                    <OrderModal />
+                    { payments_today.paments && payments_today.payments.length > 0 ? this.renderPayments(payments_today, 'Today') : '' }
+                    { payments_this_month.payments ? this.renderPayments(payments_this_month, 'This Month') : '' }
                 </div>
             )
         } else {
