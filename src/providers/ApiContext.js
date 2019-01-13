@@ -20,15 +20,19 @@ class ApiProvider extends Component {
 
     getPayments = async (year, month, date) => {
         console.log('getting payments for: ', this.state.year, this.state.month, this.state.date)
+        const headers = lib.getHeadersWithJWT()
+
         const _year = parseInt(this.state.year)
         const _month = parseInt(this.state.month)
-        const _date = parseInt(this.state.date)
-        // console.log('date: ', date)
-        console.log('month query: ', `${API_URL}/payments?year=${_year}&month=${_month}`)
-        console.log('date query: ', `${API_URL}/payments?year=${_year}&month=${_month}&date=${_date}`)
-        const headers = lib.getHeadersWithJWT()
+
         const payments_this_month = await axios.get(`${API_URL}/payments?year=${_year}&month=${_month}`, headers)
-        const payments_today = await axios.get(`${API_URL}/payments?year=${_year}&month=${_month}&date=${_date}`, headers)
+        
+        const today = new Date()
+        const current_year = today.getFullYear()
+        const current_month = today.getMonth() + 1
+        const current_date = today.getDate()
+
+        const payments_today = await axios.get(`${API_URL}/payments?year=${current_year}&month=${current_month}&date=${current_date}`, headers)
 
         console.log('this_month: ', payments_this_month.data.data)
         console.log('today: ', payments_today.data.data)
@@ -37,7 +41,6 @@ class ApiProvider extends Component {
             this.setState({ payments_this_month: payments_this_month.data.data })
             this.setState({ payments_today: payments_today.data.data })
         }
-            // return { payments_this_month: payments_this_month.data, payments_today: payments_today.data }
     }
 
     login = async (farm_name, password) => {
@@ -62,9 +65,7 @@ class ApiProvider extends Component {
     }
     
     changeMonth = (month) => {
-        console.log('in changeMonth: ', month)
         this.setState({ month })
-        console.log('changed month: ', this.state.month)
     }
 
     changeDate = (date) => {
