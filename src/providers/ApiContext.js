@@ -18,8 +18,7 @@ class ApiProvider extends Component {
         date: 0
     }
 
-    getPayments = async (year, month, date) => {
-        console.log('getting payments for: ', this.state.year, this.state.month, this.state.date)
+    getPayments = async () => {
         const headers = lib.getHeadersWithJWT()
 
         const _year = parseInt(this.state.year)
