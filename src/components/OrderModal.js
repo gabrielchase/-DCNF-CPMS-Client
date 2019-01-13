@@ -11,7 +11,8 @@ class OrderModal extends Component {
         email_address: '',
         mobile_number: '',
         address: '',
-        account_number: ''
+        account_number: '',
+        modal_open: false
     }
 
     handleOnChange = (e) => {
@@ -24,11 +25,16 @@ class OrderModal extends Component {
         const res = await axios.post('http://localhost:3005/api/package/5c251f357a4d2b2d4028fab6/orders', this.state, headers)
         console.log('res.data: ', res.data)
         console.log(this.state)
+        if (res.data.success) {
+            this.setState({ modal_open: false })
+        }
     }
 
     render() {
         return (
-            <Modal header='Add Order' trigger={<Button>Add Order</Button>} actions={<Button onClick={this.handleAddOrder}>Submit</Button>}>
+            <div>
+            <Button onClick={() => this.setState({ modal_open: true })}>Add Order</Button>
+            <Modal header='Add Order' open={this.state.modal_open} actions={<Button onClick={this.handleAddOrder}>Submit</Button>}>
                 <Row>
                     <Input s={12} id='partner_name' placeholder="Maria Clara"  label="Investor Name" onChange={this.handleOnChange}/>
                     <Input s={12} id='email_address' placeholder="mariaclara@gmail.com" label="Investor Email" onChange={this.handleOnChange}/>
@@ -37,6 +43,7 @@ class OrderModal extends Component {
                     <Input s={12} id='account_number' label="Account Number" onChange={this.handleOnChange}/>
                 </Row>
             </Modal>
+            </div>
         )
     }
 }
