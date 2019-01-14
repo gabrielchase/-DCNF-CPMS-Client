@@ -23,3 +23,42 @@ body {
 #partner-row {
   cursor: pointer;
 }
+
+#partner-row:hover {
+  color: steelblue;
+}
+
+#months {
+  padding-top: 20px;
+}
+
+#inline-p {
+  display: inline-block;
+}
+
+#no-bottom-margin {
+  margin-bottom: -10px;
+}
+
+#inline-h {
+  display: inline-block;
+  margin: 0;
+}
+
+#float-right-button {
+  float: right !important;
+}
+
+#total-display {
+  display: inline-block;
+}
+
+#date-dropdown {
+  float: right;
+  padding-left: 200px;
+}
+
+
+#filter-payments-title {
+  margin-top: 50px;
+} 
