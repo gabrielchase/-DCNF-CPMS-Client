@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Button, Input, Modal, Row } from 'react-materialize'
+import { Button, Input, Modal, Row, Col } from 'react-materialize'
 
 import lib from '../lib'
 
@@ -33,16 +33,16 @@ class OrderModal extends Component {
     render() {
         return (
             <div>
-            <Button onClick={() => this.setState({ modal_open: true })}>Add Order</Button>
-            <Modal header='Add Order' open={this.state.modal_open} actions={<Button onClick={this.handleAddOrder}>Submit</Button>}>
-                <Row>
-                    <Input s={12} id='partner_name' placeholder="Maria Clara"  label="Investor Name" onChange={this.handleOnChange}/>
-                    <Input s={12} id='email_address' placeholder="mariaclara@gmail.com" label="Investor Email" onChange={this.handleOnChange}/>
-                    <Input s={12} id='mobile_number' label="Mobile Number" onChange={this.handleOnChange}/>
-                    <Input s={12} id='address' label="Address" onChange={this.handleOnChange}/>
-                    <Input s={12} id='account_number' label="Account Number" onChange={this.handleOnChange}/>
-                </Row>
-            </Modal>
+                <Button id="float-right-button" onClick={() => this.setState({ modal_open: true })}>Add Order</Button>
+                <Modal header='Add Order' open={this.state.modal_open} actions={<Button onClick={this.handleAddOrder}>Submit</Button>}>
+                    <Row>
+                        <Input s={12} id='partner_name' placeholder="Maria Clara"  label="Investor Name" onChange={this.handleOnChange}/>
+                        <Input s={12} id='email_address' placeholder="mariaclara@gmail.com" label="Investor Email" onChange={this.handleOnChange}/>
+                        <Input s={12} id='mobile_number' label="Mobile Number" onChange={this.handleOnChange}/>
+                        <Input s={12} id='address' label="Address" onChange={this.handleOnChange}/>
+                        <Input s={12} id='account_number' label="Account Number" onChange={this.handleOnChange}/>
+                    </Row>
+                </Modal>
             </div>
         )
     }

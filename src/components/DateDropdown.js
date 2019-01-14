@@ -28,9 +28,9 @@ class DateDropdown extends Component {
 
     render() {
         return (
-            <Row>
-                <Input s={4} label="Year" value={this.props.year} onChange={e => this.handleYearChange(e)} />
-                <Input s={4} type="select" label="Month" value={this.props.month} onChange={e => this.handleDateChange('month', e.target.value)}>
+            <div id="date-dropdown" >
+                <Input  id="date-dropdown-input" label="Year" value={this.props.year} onChange={e => this.handleYearChange(e)} />
+                <Input  id="date-dropdown-input" type="select" label="Month" value={this.props.month} onChange={e => this.handleDateChange('month', e.target.value)}>
                     {MONTHS.map((m) => {
                         return (
                             <option value={MONTHS.indexOf(m)+1}>{m}</option>
@@ -46,7 +46,7 @@ class DateDropdown extends Component {
                     })}
                 </Input> */}
                 {/* <Button s={4} waves="light" onClick={this.props.getPayments}>Search</Button> */}
-            </Row>
+            </div>
             
         )
     }

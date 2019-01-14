@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Input, Row, Table } from 'react-materialize'
+import { Button, Col, Input, Row, Table } from 'react-materialize'
 import axios from 'axios'
 
 import { API_URL } from '../constants.json'
@@ -78,7 +78,12 @@ class Partner extends Component {
                         </tbody>
                     </Table>
                     <br />
-                    <Button onClick={this.submitPaymentChanges}>Save Changes</Button>
+                    <Row>
+                        <Col s={10}></Col>
+                        <Col s={2}><Button onClick={this.submitPaymentChanges}>Save Changes</Button></Col>
+                    </Row>
+                    <br/>
+                    <br/>
                 </div>
             )
         }
@@ -91,19 +96,24 @@ class Partner extends Component {
             return (
                 <div class="container">
                     <Row>
-                        <p s={12}>Name: {partner.order.partner_name}</p>
+                        <h2 s={12}>{partner.order.partner_name}</h2>
                     </Row>
                     <Row>
-                        <p s={4}>Email: {partner.order.email_address}</p>
-                        <p s={4}>Mobile Number: {partner.order.mobile_number}</p>
-                        <p s={4}>Account Number: {partner.order.account_number}</p>
+                        <Col s={6}>Email: {partner.order.email_address}</Col>
+                        <Col s={6}>Order ID: {partner.order._id}</Col>
                     </Row>
                     <Row>
-                        <p s={6}>Order ID: {partner.order._id}</p>
-                        <p s={6}>Order Status: {partner.order.status}</p>
+                        <Col s={6}>Mobile Number: {partner.order.mobile_number}</Col>
+                        <Col s={6}>Order Status: {partner.order.status}</Col>
+                    </Row>
+                    <Row>
+                        <Col s={12}>Account Number: {partner.order.account_number}</Col>
                     </Row>
                     <br />
-                    <p>Payments: </p>
+                    <div>
+                        <h5 id="inline-h">Payments: </h5>
+                        <Button id="float-right-button" onClick={this.submitPaymentChanges}>Save Changes</Button>
+                    </div>
                     {this.renderOrderPayments()}
                 </div>
             ) 
