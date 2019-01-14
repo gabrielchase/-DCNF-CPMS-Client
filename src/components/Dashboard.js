@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Row, Col, Navbar, NavItem } from 'react-materialize'
+import { Row, Col } from 'react-materialize'
 
 import { ApiConsumer } from '../providers/ApiContext'
 import DateDropdown from './DateDropdown'
 import OrderModal from './OrderModal'
 
 import { displayDate, displayMoney } from '../lib'
+import Nav from './Nav'
 
 class Dashboard extends Component {
     state = {
@@ -27,9 +28,6 @@ class Dashboard extends Component {
 
         await this.props.getUpcomingPayments(2021)
         await this.props.getPayments()
-        
-        let stupid_icon = document.getElementsByClassName('button-collapse')
-        stupid_icon[0].remove()
     }
 
     handlePartnerRowClick = (partner) => {
@@ -61,7 +59,6 @@ class Dashboard extends Component {
                             <th>Due Date</th>
                             <th>Name</th>
                             <th>Amount</th>
-                            <th>Order ID</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,7 +68,6 @@ class Dashboard extends Component {
                                     <td>{displayDate(p.due_date)}</td>
                                     <td>{p.partner_name}</td>
                                     <td>{displayMoney(p.amount)}</td>
-                                    <td>{p.order_id}</td>
                                 </tr>
                             )
                         })}
@@ -105,7 +101,6 @@ class Dashboard extends Component {
                                 <th>Due Date</th>
                                 <th>Name</th>
                                 <th>Amount</th>
-                                <th>Order ID</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -115,7 +110,6 @@ class Dashboard extends Component {
                                         <td>{displayDate(p.due_date)}</td>
                                         <td>{p.partner_name}</td>
                                         <td>{displayMoney(p.amount)}</td>
-                                        <td>{p.order_id}</td>
                                     </tr>
                                 )
                             })}
@@ -136,11 +130,10 @@ class Dashboard extends Component {
         if (Object.keys(payments_today).length > 0 || Object.keys(payments_this_month).length > 0 || Object.keys(upcoming_payments).length > 0) {
             return (
                 <div>
-                    <Navbar left>
-                        
-                    </Navbar>
+                    <Nav history={this.props.history} />
                     <div class="container">
                         <br />   
+                        <br/>
                         <Row>
                             <Col s={12}>
                                 <OrderModal />
