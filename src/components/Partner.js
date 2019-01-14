@@ -94,8 +94,9 @@ class Partner extends Component {
                 <div>
                     <Nav history={this.props.history}/>
                     <div class="container">
+                        <br/>
                         <Row>
-                            <h2 s={12}>{partner.order.partner_name}</h2>
+                            <h4 s={12}>{partner.order.partner_name}</h4>
                         </Row>
                         <Row>
                             <Col s={6}>Email: {partner.order.email_address}</Col>

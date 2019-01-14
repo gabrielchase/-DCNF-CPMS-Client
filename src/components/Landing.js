@@ -7,6 +7,10 @@ class Landing extends Component {
         password: 'password'
     }
 
+    componentDidMount() {
+        document.body.style.backgroundColor = "#47BAA8"
+    }
+
     handleOnChange = ({ target: { value, id }}) => {
         this.setState({
             [id]: value
@@ -29,7 +33,9 @@ class Landing extends Component {
                 <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
                     <form onSubmit={this.handleLogin}>
                         <div class="card-content">
-                            <span class="card-title">Enter Credentials</span>
+                            <br/>
+                            <p class="center-align"><img src="https://dcnurturefarm.com/wp-content/themes/donchichos/img/logo.png" height="100" width="100"/></p>
+                            <br/>
                             <div class="row">
                                 <div class="input-field col s12">
                                     <label for="email">Farm Name or Email Address</label>

@@ -13,7 +13,8 @@ class Dashboard extends Component {
         valid_months: []
     }
 
-    async componentDidMount() {        
+    async componentDidMount() {
+        document.body.style.backgroundColor = "white"        
         let current_date = new Date()
         let year = current_date.getFullYear()
         await this.props.changeYear(year)
