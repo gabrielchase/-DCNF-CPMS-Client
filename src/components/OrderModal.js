@@ -34,7 +34,7 @@ class OrderModal extends Component {
         return (
             <div>
                 <Button id="float-right-button" onClick={() => this.setState({ modal_open: true })}>Add Order</Button>
-                <Modal header='Add Order' open={this.state.modal_open} actions={<Button onClick={this.handleAddOrder}>Submit</Button> }>
+                <Modal fixedFooter modalOptions={{ dismissible: false }}  id="order-modal" header='Add Order' open={this.state.modal_open} actions={<div><Button onClick={this.handleAddOrder}>Submit</Button> <Button className="red" modal="close" waves="light" onClick={() => this.setState({ modal_open: false })}>Close</Button></div> }>
                     <Row>
                         <Input s={12} id='partner_name' placeholder="Maria Clara"  label="Investor Name" onChange={this.handleOnChange}/>
                         <Input s={12} id='email_address' placeholder="mariaclara@gmail.com" label="Investor Email" onChange={this.handleOnChange}/>
