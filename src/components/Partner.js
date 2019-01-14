@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import { API_URL } from '../constants.json'
 import lib from '../lib'
+import Nav from './Nav'
 
 
 class Partner extends Component {
@@ -90,27 +91,30 @@ class Partner extends Component {
         console.log('partner: ', this.state.partner)
         if (partner && partner.order) {
             return (
-                <div class="container">
-                    <Row>
-                        <h2 s={12}>{partner.order.partner_name}</h2>
-                    </Row>
-                    <Row>
-                        <Col s={6}>Email: {partner.order.email_address}</Col>
-                        <Col s={6}>Order ID: {partner.order._id}</Col>
-                    </Row>
-                    <Row>
-                        <Col s={6}>Mobile Number: {partner.order.mobile_number}</Col>
-                        <Col s={6}>Order Status: {partner.order.status}</Col>
-                    </Row>
-                    <Row>
-                        <Col s={12}>Account Number: {partner.order.account_number}</Col>
-                    </Row>
-                    <br />
-                    <div>
-                        <h5 id="inline-h">Payments: </h5>
-                        <Button id="float-right-button" onClick={this.submitPaymentChanges}>Save Payment Changes</Button>
+                <div>
+                    <Nav history={this.props.history}/>
+                    <div class="container">
+                        <Row>
+                            <h2 s={12}>{partner.order.partner_name}</h2>
+                        </Row>
+                        <Row>
+                            <Col s={6}>Email: {partner.order.email_address}</Col>
+                            <Col s={6}>Order ID: {partner.order._id}</Col>
+                        </Row>
+                        <Row>
+                            <Col s={6}>Mobile Number: {partner.order.mobile_number}</Col>
+                            <Col s={6}>Order Status: {partner.order.status}</Col>
+                        </Row>
+                        <Row>
+                            <Col s={12}>Account Number: {partner.order.account_number}</Col>
+                        </Row>
+                        <br />
+                        <div>
+                            <h5 id="inline-h">Payments: </h5>
+                            <Button id="float-right-button" onClick={this.submitPaymentChanges}>Save Payment Changes</Button>
+                        </div>
+                        {this.renderOrderPayments()}
                     </div>
-                    {this.renderOrderPayments()}
                 </div>
             ) 
         } else {
