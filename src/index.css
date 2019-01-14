@@ -58,7 +58,18 @@ body {
   padding-left: 200px;
 }
 
-
 #filter-payments-title {
   margin-top: 50px;
 } 
+
+.nav-wrapper {
+  background-color: #47BAA8;
+}
+
+#last-nav-item {
+  padding-right: 150px;
+}
+
+#logo {
+  padding-left: 50px;
+}
