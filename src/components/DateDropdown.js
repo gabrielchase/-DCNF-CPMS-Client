@@ -31,6 +31,7 @@ class DateDropdown extends Component {
             <div id="date-dropdown" >
                 <Input  id="date-dropdown-input" label="Year" value={this.props.year} onChange={e => this.handleYearChange(e)} />
                 <Input  id="date-dropdown-input" type="select" label="Month" value={this.props.month} onChange={e => this.handleDateChange('month', e.target.value)}>
+                    <option value=''></option>
                     {MONTHS.map((m) => {
                         return (
                             <option value={MONTHS.indexOf(m)+1}>{m}</option>
