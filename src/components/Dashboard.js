@@ -12,7 +12,6 @@ class Dashboard extends Component {
         valid_months: []
     }
 
-
     async componentDidMount() {        
         let current_date = new Date()
         let year = current_date.getFullYear()
@@ -28,6 +27,9 @@ class Dashboard extends Component {
 
         await this.props.getUpcomingPayments(2021)
         await this.props.getPayments()
+        
+        let stupid_icon = document.getElementsByClassName('button-collapse')
+        stupid_icon[0].remove()
     }
 
     handlePartnerRowClick = (partner) => {
@@ -134,6 +136,9 @@ class Dashboard extends Component {
         if (Object.keys(payments_today).length > 0 || Object.keys(payments_this_month).length > 0 || Object.keys(upcoming_payments).length > 0) {
             return (
                 <div>
+                    <Navbar left>
+                        
+                    </Navbar>
                     <div class="container">
                         <br />   
                         <Row>
