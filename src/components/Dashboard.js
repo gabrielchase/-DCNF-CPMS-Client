@@ -26,7 +26,7 @@ class Dashboard extends Component {
 
         // console.log(year, month, date)
 
-        await this.props.getPaymentsForYear(2021)
+        await this.props.getUpcomingPayments(2021)
         await this.props.getPayments()
     }
 
@@ -50,8 +50,8 @@ class Dashboard extends Component {
         
     }
 
-    renderYearPayments = (year_payments) => {
-        if (year_payments) {            
+    renderUpcomingPayments = (upcoming_payments) => {
+        if (upcoming_payments) {            
             return (
                 <table class="centered highlight">
                     <thead>
@@ -63,7 +63,7 @@ class Dashboard extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {year_payments.map((p) => {
+                        {upcoming_payments.map((p) => {
                             return (
                                 <tr id='partner-row' onClick={this.handlePartnerRowClick.bind(this, p)}>
                                     <td>{displayDate(p.due_date)}</td>
@@ -129,25 +129,27 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { payments_this_month, payments_today, year_payments } = this.props
-        console.log('year_payments: ', year_payments)
-        if (Object.keys(payments_today).length > 0 || Object.keys(payments_this_month).length > 0 || Object.keys(year_payments).length > 0) {
+        const { payments_this_month, payments_today, upcoming_payments } = this.props
+        console.log('upcoming_payments: ', upcoming_payments)
+        if (Object.keys(payments_today).length > 0 || Object.keys(payments_this_month).length > 0 || Object.keys(upcoming_payments).length > 0) {
             return (
                 <div>
                     <div class="container">
                         <br />   
-                        <OrderModal />
-                        <br/>
-                        <br/>
-                        <br/>
                         <Row>
+                            <Col s={12}>
+                                <OrderModal />
+                            </Col>
+                            <br/>
+                            <br/>
+                            <br/>
                             <Col s={12}>
                                 { payments_today.paments && payments_today.payments.length > 0 ? this.renderPayments(payments_today, 'Today') : '' }
                                 { payments_this_month.payments ? this.renderPayments(payments_this_month) : '' }
                                 <br />
                                 <br />
                                 <h5>Upcoming Payments</h5>
-                                { year_payments && year_payments.payments.length > 0 ? this.renderYearPayments(year_payments.payments) : '' }    
+                                { upcoming_payments && upcoming_payments.length > 0 ? this.renderUpcomingPayments(upcoming_payments) : '' }    
                             </Col>
                         </Row>
                     </div>
@@ -163,7 +165,7 @@ class Dashboard extends Component {
 
 const ConnectedDashboard = props => (
     <ApiConsumer>
-        {({ is_auth, getPayments, payments_this_month, payments_today, changeYear, changeMonth, changeDate, year, month, year_payments, getPaymentsForYear }) => (
+        {({ is_auth, getPayments, payments_this_month, payments_today, changeYear, changeMonth, changeDate, year, month, upcoming_payments, getUpcomingPayments }) => (
             <Dashboard
                 {...props}
                 is_auth={is_auth}
@@ -175,8 +177,8 @@ const ConnectedDashboard = props => (
                 changeDate={changeDate}
                 year={year}
                 month={month}
-                year_payments={year_payments}
-                getPaymentsForYear={getPaymentsForYear}
+                upcoming_payments={upcoming_payments}
+                getUpcomingPayments={getUpcomingPayments}
             />
         )}
     </ApiConsumer>

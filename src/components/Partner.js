@@ -78,10 +78,6 @@ class Partner extends Component {
                         </tbody>
                     </Table>
                     <br />
-                    <Row>
-                        <Col s={10}></Col>
-                        <Col s={2}><Button onClick={this.submitPaymentChanges}>Save Changes</Button></Col>
-                    </Row>
                     <br/>
                     <br/>
                 </div>
@@ -112,7 +108,7 @@ class Partner extends Component {
                     <br />
                     <div>
                         <h5 id="inline-h">Payments: </h5>
-                        <Button id="float-right-button" onClick={this.submitPaymentChanges}>Save Changes</Button>
+                        <Button id="float-right-button" onClick={this.submitPaymentChanges}>Save Payment Changes</Button>
                     </div>
                     {this.renderOrderPayments()}
                 </div>

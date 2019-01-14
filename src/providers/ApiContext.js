@@ -12,10 +12,18 @@ class ApiProvider extends Component {
         is_auth: false,
         payments_this_month: {},
         payments_today: {},
+        upcoming_payments: {},
         order: {},
         year: 0,
         month: 0, 
         date: 0
+    }
+
+    getUpcomingPayments = async () => {
+        const headers = lib.getHeadersWithJWT()
+        const upcoming_payments = await axios.get(`${API_URL}/upcoming_payments`, headers)
+        console.log('upcoming_payments in api_context: ', upcoming_payments.data.data)
+        this.setState({ upcoming_payments: upcoming_payments.data.data })
     }
 
     getPayments = async () => {
@@ -85,7 +93,9 @@ class ApiProvider extends Component {
                 changeMonth: this.changeMonth,
                 changeDate: this.changeDate,
                 payments_this_month: this.state.payments_this_month,
-                payments_today: this.state.payments_today
+                payments_today: this.state.payments_today,
+                getUpcomingPayments: this.getUpcomingPayments,
+                upcoming_payments: this.state.upcoming_payments
             }}>
                 {this.props.children}
             </ApiContext.Provider>
