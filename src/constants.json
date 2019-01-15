@@ -1,6 +1,6 @@
 {
     "development": {
-        "API_URL": "http://localhost:3005/api"
+        "API_URL": "https://donchicho-cpms-api.herokuapp.com/api"
     },
     "production": {
         "API_URL": "https://donchicho-cpms-api.herokuapp.com/api"
