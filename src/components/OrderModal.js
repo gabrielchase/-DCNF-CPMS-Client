@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Button, Input, Modal, Row, Col } from 'react-materialize'
+import { Button, Input, Modal, Row } from 'react-materialize'
 
+import { ApiConsumer } from '../providers/ApiContext'
 import lib from '../lib'
 
 
@@ -12,7 +13,8 @@ class OrderModal extends Component {
         mobile_number: '',
         address: '',
         account_number: '',
-        modal_open: false
+        modal_open: false,
+        loading: false
     }
 
     handleOnChange = (e) => {
@@ -21,12 +23,16 @@ class OrderModal extends Component {
 
     handleAddOrder = async (e) => { 
         e.preventDefault()
+        this.setState({ loading: !this.state.loading })
         const headers = lib.getHeadersWithJWT()
         const res = await axios.post('http://localhost:3005/api/package/5c251f357a4d2b2d4028fab6/orders', this.state, headers)
         console.log('res.data: ', res.data)
         console.log(this.state)
         if (res.data.success) {
+            await this.props.getUpcomingPayments()
             this.setState({ modal_open: false })
+            this.setState({ loading: !this.state.loading })
+            window.Materialize.toast('New order added!', 5000)
         }
     }
 
@@ -34,7 +40,7 @@ class OrderModal extends Component {
         return (
             <div>
                 <Button id="float-right-button" onClick={() => this.setState({ modal_open: true })}>Add Order</Button>
-                <Modal fixedFooter modalOptions={{ dismissible: false }}  id="order-modal" header='Add Order' open={this.state.modal_open} actions={<div><Button onClick={this.handleAddOrder}>Submit</Button> <Button className="red" modal="close" waves="light" onClick={() => this.setState({ modal_open: false })}>Close</Button></div> }>
+                <Modal fixedFooter modalOptions={{ dismissible: false }}  id="order-modal" header='Add Order' open={this.state.modal_open} actions={<div><Button onClick={this.handleAddOrder}>{this.state.loading ? 'Loading...' : 'Submit'}</Button> <Button className="red" modal="close" waves="light" onClick={() => this.setState({ modal_open: false })}>Close</Button></div> }>
                     <Row>
                         <Input s={12} id='partner_name' placeholder="Maria Clara"  label="Investor Name" onChange={this.handleOnChange}/>
                         <Input s={12} id='email_address' placeholder="mariaclara@gmail.com" label="Investor Email" onChange={this.handleOnChange}/>
@@ -48,4 +54,15 @@ class OrderModal extends Component {
     }
 }
 
-export default OrderModal
+const ConnectedOrderModal = props => (
+    <ApiConsumer>
+        {({ getUpcomingPayments }) => (
+            <OrderModal
+                {...props}
+                getUpcomingPayments={getUpcomingPayments}
+            />
+        )}
+    </ApiConsumer>
+)
+
+export default ConnectedOrderModal

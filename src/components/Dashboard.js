@@ -88,14 +88,9 @@ class Dashboard extends Component {
         if (payments) {
             return (
                 <div>
-                    <div id="no-margin-bottom">
-                        <h5 id="inline-h">Filter Payments</h5>
-                        <DateDropdown />
-                    </div>
                     <div id="no-bottom-margin">
                         <h6 id="total-display">Total: {displayMoney(payments.total)}</h6>
                     </div>
-                    
                     <table class="centered highlight">
                         <thead>
                             <tr>
@@ -143,6 +138,10 @@ class Dashboard extends Component {
                             <br/>
                             <br/>
                             <Col s={12}>
+                                <div id="no-margin-bottom">
+                                    <h5 id="inline-h">Filter Payments</h5>
+                                    <DateDropdown />
+                                </div>
                                 { payments_today.paments && payments_today.payments.length > 0 ? this.renderPayments(payments_today, 'Today') : '' }
                                 { payments_this_month.payments ? this.renderPayments(payments_this_month) : '' }
                                 <br />

@@ -4,7 +4,8 @@ import { ApiConsumer } from '../providers/ApiContext'
 class Landing extends Component {
     state = {
         farm_name: `Don Chicho's`,
-        password: 'password'
+        password: 'password',
+        loading: false
     }
 
     componentDidMount() {
@@ -19,6 +20,8 @@ class Landing extends Component {
 
     handleLogin = async (event) => {
         event.preventDefault()
+
+        this.setState({ loading: !this.state.loading })
 
         const success = await this.props.login(this.state.farm_name, this.state.password)
         
@@ -48,7 +51,7 @@ class Landing extends Component {
                             </div>
                         </div>
                         <div class="card-action right-align">
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                        <button class="btn waves-effect waves-light" type="submit" name="action">{this.state.loading ? 'Loading...' : 'Submit'}</button>
                         </div>
                     </form>
                 </div>

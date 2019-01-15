@@ -11,7 +11,8 @@ class Partner extends Component {
     state = {
         partner: {},
         payment_changes: [],
-        errors: []
+        errors: [],
+        loading: false
     }
 
     async componentWillMount() {
@@ -22,9 +23,6 @@ class Partner extends Component {
     }
 
     handlePaymentChanges = (e, payment) => {
-        console.log('handling payment changes')
-        console.log('payment: ', payment)
-        console.log(e.target.value)
         this.setState(prevState => ({
             payment_changes: [...prevState.payment_changes, { id: payment._id, paid: e.target.value }]
         }))
@@ -32,20 +30,30 @@ class Partner extends Component {
 
     submitPaymentChanges = async (e) => {
         e.preventDefault()
-        console.log('changes: ', this.state.payment_changes)
-        
-        const headers = lib.getHeadersWithJWT()
-        for (let c of this.state.payment_changes) {
-            console.log('changing ', c.id)
-            const res = await axios.put(`${API_URL}/payments/${c.id}/paid`, { paid: c.paid }, headers)
-            console.log(res.data)
-            if (!res.data.success) {
-                this.setState(prevState => ({
-                    errors: [...prevState.errors, c.id]
-                }))
+        console.log('asdf', this.state.payment_changes, this.state.payment_changes)
+        if (this.state.payment_changes.length > 0) {
+            this.setState({ loading: !this.state.loading })
+            
+            const headers = lib.getHeadersWithJWT()
+            for (let c of this.state.payment_changes) {
+                console.log('changing ', c.id)
+                const res = await axios.put(`${API_URL}/payments/${c.id}/paid`, { paid: c.paid }, headers)
+                console.log(res.data)
+                if (!res.data.success) {
+                    this.setState(prevState => ({
+                        errors: [...prevState.errors, c.id]
+                    }))
+                }
+                
             }
+            console.log('done with for loop\nerrors: ', this.state.errors)
+            
+            this.setState({ loading: !this.state.loading })
+            window.Materialize.toast('Succesfully changed payment(s)!', 5000)
+        } else {
+            window.Materialize.toast('No payment changes', 5000)
+            console.log('no changes')
         }
-        console.log('done with for loop\nerrors: ', this.state.errors)
     }
 
     renderOrderPayments = () => {
@@ -88,7 +96,6 @@ class Partner extends Component {
 
     render() {
         const { partner } = this.state 
-        console.log('partner: ', this.state.partner)
         if (partner && partner.order) {
             return (
                 <div>
@@ -112,7 +119,7 @@ class Partner extends Component {
                         <br />
                         <div>
                             <h5 id="inline-h">Payments: </h5>
-                            <Button id="float-right-button" onClick={this.submitPaymentChanges}>Save Payment Changes</Button>
+                            <Button id="float-right-button" onClick={this.submitPaymentChanges}>{this.state.loading ? 'Loading...' : 'Save Payment Changes'}</Button>
                         </div>
                         {this.renderOrderPayments()}
                     </div>
