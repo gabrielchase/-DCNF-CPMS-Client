@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+
 import { ApiConsumer } from '../providers/ApiContext'
+
+import constants from '../constants.json'
+
+const API_URL = constants[process.env.NODE_ENV].API_URL
 
 class Landing extends Component {
     state = {
         farm_name: `Don Chicho's`,
-        password: 'password',
         loading: false
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         document.body.style.backgroundColor = "#47BAA8"
+        await axios.get(API_URL)
     }
 
     handleOnChange = ({ target: { value, id }}) => {
@@ -42,11 +48,11 @@ class Landing extends Component {
                             <div class="row">
                                 <div class="input-field col s12">
                                     <label for="email">Farm Name or Email Address</label>
-                                    <input type="text"  name="email" id="email" value={this.state.farm_name}/>
+                                    <input type="text"  name="email" id="email" onChange={this.handleOnChange} value={this.state.farm_name}/>
                                 </div>
                                 <div class="input-field col s12">
                                     <label for="password">Password </label>
-                                    <input type="password" class="validate" name="password" id="password" value={this.state.password}/>
+                                    <input type="password" class="validate" name="password" id="password" onChange={this.handleOnChange} value={this.state.password}/>
                                 </div>
                             </div>
                         </div>
