@@ -2,18 +2,6 @@ import React, { Component } from 'react'
 import { Navbar, NavItem } from 'react-materialize'
 
 class Nav extends Component {
-    // componentDidMount() {
-    //     console.log(this.props)
-    //     let stupid_icon = document.getElementsByClassName('button-collapse')
-    //     console.log('stupid_icon: ', stupid_icon, stupid_icon.length)
-    //     if (stupid_icon) {
-    //         console.log('in here')
-    //         stupid_icon[0].remove()
-    //     }
-    //     else 
-    //         console.log('hen hao')
-    // }
-
     handleLogoClick = (e) => {
         e.preventDefault()
         this.props.history.push('/dashboard')
