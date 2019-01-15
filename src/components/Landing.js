@@ -15,6 +15,7 @@ class Landing extends Component {
 
     async componentDidMount() {
         document.body.style.backgroundColor = "#47BAA8"
+        console.log(env.process.NODE_ENV)
         await axios.get(API_URL)
     }
 

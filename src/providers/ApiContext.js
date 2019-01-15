@@ -52,6 +52,7 @@ class ApiProvider extends Component {
     }
 
     login = async (farm_name, password) => {
+        console.log(env.process.NODE_ENV, API_URL)
         const res = await axios.post(`${API_URL}/auth/login`, { farm_name, password })
         
         if (res.data.success) {
