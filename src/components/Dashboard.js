@@ -151,6 +151,8 @@ class Dashboard extends Component {
                             </Col>
                         </Row>
                     </div>
+                    <br/>
+                    <br/>
                 </div>
             )
         } else {
