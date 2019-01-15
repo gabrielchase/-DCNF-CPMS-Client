@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -10,6 +8,8 @@ import Landing from './components/Landing'
 import Partner from './components/Partner'
 import ProtectedRoute from './components/ProtectedRoute'
 import history from './history'
+
+require('dotenv').config()
 
 const App = () => (
   <Router history={history}>
