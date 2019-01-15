@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import { Button, Col, Input, Row, Table } from 'react-materialize'
 import axios from 'axios'
 
-import { API_URL } from '../constants.json'
+import constants from '../constants.json'
 import lib from '../lib'
+
 import Nav from './Nav'
 
+const API_URL = constants[process.env.NODE_ENV].API_URL
 
 class Partner extends Component {
     state = {

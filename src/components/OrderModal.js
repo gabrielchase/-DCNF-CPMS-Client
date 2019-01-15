@@ -3,8 +3,10 @@ import axios from 'axios'
 import { Button, Input, Modal, Row } from 'react-materialize'
 
 import { ApiConsumer } from '../providers/ApiContext'
+import constants from '../constants.json'
 import lib from '../lib'
 
+const API_URL = constants[process.env.NODE_ENV].API_URL
 
 class OrderModal extends Component {
     state = {
@@ -25,7 +27,7 @@ class OrderModal extends Component {
         e.preventDefault()
         this.setState({ loading: !this.state.loading })
         const headers = lib.getHeadersWithJWT()
-        const res = await axios.post('http://localhost:3005/api/package/5c251f357a4d2b2d4028fab6/orders', this.state, headers)
+        const res = await axios.post(`${API_URL}/package/5c251f357a4d2b2d4028fab6/orders`, this.state, headers)
         console.log('res.data: ', res.data)
         console.log(this.state)
         if (res.data.success) {

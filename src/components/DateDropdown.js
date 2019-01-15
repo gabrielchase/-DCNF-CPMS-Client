@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Input, Row } from 'react-materialize'
+import { Input } from 'react-materialize'
 import { ApiConsumer } from '../providers/ApiContext'
 
 import { MONTHS } from '../constants'

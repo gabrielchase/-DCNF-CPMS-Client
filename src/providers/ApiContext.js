@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import { API_URL } from '../constants.json'
+import constants from '../constants.json'
 
 import lib from '../lib'
 
 const ApiContext = React.createContext()
+const API_URL = constants[process.env.NODE_ENV].API_URL
 
 class ApiProvider extends Component {
     state = { 

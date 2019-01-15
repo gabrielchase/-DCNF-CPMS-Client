@@ -1,4 +1,9 @@
 {
-    "API_URL": "http://localhost:3005/api",
+    "development": {
+        "API_URL": "http://localhost:3005/api"
+    },
+    "production": {
+        "API_URL": "some production url"
+    },
     "MONTHS": ["January", "February",  "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 }   
