@@ -10,7 +10,8 @@ const API_URL = constants[process.env.NODE_ENV].API_URL
 class Landing extends Component {
     state = {
         farm_name: `Don Chicho's`,
-        loading: false
+        loading: false,
+        error: ''
     }
 
     async componentDidMount() {
@@ -34,6 +35,8 @@ class Landing extends Component {
         
         if (success) {
             this.props.history.push('/dashboard')
+        } else {
+            this.setState({ loading: !this.state.loading, error: 'Invalid credentials' })
         }
     }
 
@@ -45,6 +48,7 @@ class Landing extends Component {
                         <div class="card-content">
                             <br/>
                             <p class="center-align"><img src="https://dcnurturefarm.com/wp-content/themes/donchichos/img/logo.png" height="100" width="100"/></p>
+                            {this.state.error ? <h5 className="center-align" style={{ color: 'red' }}><strong>{this.state.error}</strong></h5> : ''}
                             <br/>
                             <div class="row">
                                 <div class="input-field col s12">
